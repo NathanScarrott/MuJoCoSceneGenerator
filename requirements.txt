@@ -1,0 +1,17 @@
+# MuJoCo Scene Generator Dependencies
+
+# Core dependencies
+mujoco>=3.0.0
+numpy>=1.21.0
+
+# LLM API dependencies  
+openai>=1.0.0
+python-dotenv>=0.19.0
+
+# Optional dependencies for enhanced functionality
+matplotlib>=3.5.0  # For visualization (if needed)
+
+# Development dependencies (optional)
+# pytest>=7.0.0
+# black>=22.0.0
+# flake8>=4.0.0

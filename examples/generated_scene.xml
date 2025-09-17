@@ -1,0 +1,146 @@
+<mujoco model="aquarium_factory">
+  <compiler angle="degree" coordinate="local"/>
+  <option timestep="0.01" gravity="0 0 -9.81"/>
+  
+  <worldbody>
+    <geom name="floor" type="plane" size="10 6 0.1" rgba="0.7 0.7 0.7 1"/>
+    
+    <!-- Factory walls -->
+    <body name="wall_north" pos="0 6 1.5">
+      <geom type="box" size="10 0.1 1.5" rgba="0.8 0.8 0.9 1"/>
+    </body>
+    <body name="wall_south" pos="0 -6 1.5">
+      <geom type="box" size="10 0.1 1.5" rgba="0.8 0.8 0.9 1"/>
+    </body>
+    <body name="wall_east" pos="10 0 1.5">
+      <geom type="box" size="0.1 6 1.5" rgba="0.8 0.8 0.9 1"/>
+    </body>
+    <body name="wall_west" pos="-10 0 1.5">
+      <geom type="box" size="0.1 6 1.5" rgba="0.8 0.8 0.9 1"/>
+    </body>
+    
+    <!-- Raw Material Storage Area -->
+    <body name="raw_material_storage" pos="-8 -4 0.5">
+      <geom type="box" size="1.5 1 0.5" rgba="0.6 0.4 0.2 1"/>
+    </body>
+    
+    <!-- Glass sheets (raw materials) -->
+    <body name="glass_sheet1" pos="-8 -4 1.2">
+      <joint type="free"/>
+      <geom type="box" size="0.8 0.6 0.05" rgba="0.7 0.9 1 0.8"/>
+    </body>
+    <body name="glass_sheet2" pos="-7.5 -4 1.3">
+      <joint type="free"/>
+      <geom type="box" size="0.8 0.6 0.05" rgba="0.7 0.9 1 0.8"/>
+    </body>
+    
+    <!-- Cleaning Station -->
+    <body name="cleaning_station" pos="-5 2 0.4">
+      <geom type="box" size="1 0.8 0.4" rgba="0.9 0.9 0.9 1"/>
+    </body>
+    <body name="cleaning_brush" pos="-5 2 1.2">
+      <joint name="brush_rotation" type="hinge" axis="0 0 1"/>
+      <geom type="cylinder" size="0.3 0.1" rgba="0.2 0.8 0.2 1"/>
+    </body>
+    
+    <!-- Complementing Station -->
+    <body name="complementing_station" pos="-2 2 0.5">
+      <geom type="box" size="1.2 1 0.5" rgba="0.8 0.6 0.4 1"/>
+    </body>
+    
+    <!-- Conveyor belt -->
+    <body name="conveyor1" pos="-3.5 2 0.15">
+      <joint name="conveyor1_move" type="slide" axis="1 0 0"/>
+      <geom type="box" size="2 0.3 0.05" rgba="0.3 0.3 0.3 1"/>
+    </body>
+    
+    <!-- Silicone Setting Area -->
+    <body name="silicone_station" pos="1 2 0.5">
+      <geom type="box" size="1.2 1 0.5" rgba="0.4 0.6 0.8 1"/>
+    </body>
+    
+    <!-- Inspection Station -->
+    <body name="inspection_station" pos="4 2 0.6">
+      <geom type="box" size="1 1 0.6" rgba="0.9 0.7 0.3 1"/>
+    </body>
+    
+    <!-- Assembly Line - Lower Section -->
+    <body name="sawing_station" pos="-6 -1 0.5">
+      <geom type="box" size="1 0.8 0.5" rgba="0.8 0.3 0.3 1"/>
+    </body>
+    <body name="saw_blade" pos="-6 -1 1.3">
+      <joint name="saw_rotation" type="hinge" axis="0 1 0"/>
+      <geom type="cylinder" size="0.2 0.05" rgba="0.9 0.9 0.1 1"/>
+    </body>
+    
+    <!-- Molding Station -->
+    <body name="molding_station" pos="-3 -1 0.5">
+      <geom type="box" size="1.2 1 0.5" rgba="0.6 0.3 0.8 1"/>
+    </body>
+    
+    <!-- Cover Assembly -->
+    <body name="cover_station" pos="0 -1 0.5">
+      <geom type="box" size="1.2 1 0.5" rgba="0.3 0.8 0.6 1"/>
+    </body>
+    
+    <!-- Lighting Installation -->
+    <body name="lighting_station" pos="3 -1 0.5">
+      <geom type="box" size="1.2 1 0.5" rgba="1 0.8 0.2 1"/>
+    </body>
+    
+    <!-- Final Assembly -->
+    <body name="final_assembly" pos="6 -1 0.5">
+      <geom type="box" size="1.5 1.2 0.5" rgba="0.8 0.5 0.7 1"/>
+    </body>
+    
+    <!-- Quality Control -->
+    <body name="quality_control" pos="8 1 0.6">
+      <geom type="box" size="1 1.2 0.6" rgba="0.2 0.9 0.4 1"/>
+    </body>
+    
+    <!-- Finished aquariums -->
+    <body name="aquarium1" pos="6 -1 1.2">
+      <joint type="free"/>
+      <geom type="box" size="0.4 0.3 0.25" rgba="0.7 0.9 1 0.6"/>
+    </body>
+    <body name="aquarium2" pos="6.5 -1 1.2">
+      <joint type="free"/>
+      <geom type="box" size="0.4 0.3 0.25" rgba="0.7 0.9 1 0.6"/>
+    </body>
+    
+    <!-- Robotic arm for material handling -->
+    <body name="robot_base" pos="2 0 0.3">
+      <geom type="cylinder" size="0.3 0.3" rgba="0.5 0.5 0.5 1"/>
+      <body name="robot_arm1" pos="0 0 0.3">
+        <joint name="arm1_rotation" type="hinge" axis="0 0 1"/>
+        <geom type="capsule" size="0.08 0.6" rgba="0.8 0.8 0.8 1"/>
+        <body name="robot_arm2" pos="0.6 0 0">
+          <joint name="arm2_rotation" type="hinge" axis="0 0 1"/>
+          <geom type="capsule" size="0.06 0.4" rgba="0.7 0.7 0.7 1"/>
+        </body>
+      </body>
+    </body>
+    
+    <!-- Work-in-progress items -->
+    <body name="glass_piece" pos="-2 2 1.1">
+      <joint type="free"/>
+      <geom type="box" size="0.3 0.2 0.15" rgba="0.7 0.9 1 0.7"/>
+    </body>
+    
+    <!-- Overhead lighting -->
+    <body name="light1" pos="-3 0 2.8">
+      <geom type="cylinder" size="0.2 0.1" rgba="1 1 0.8 1"/>
+    </body>
+    <body name="light2" pos="3 0 2.8">
+      <geom type="cylinder" size="0.2 0.1" rgba="1 1 0.8 1"/>
+    </body>
+  </worldbody>
+  
+  <actuator>
+    <motor joint="brush_rotation" gear="10" ctrlrange="-1 1"/>
+    <motor joint="conveyor1_move" gear="20" ctrlrange="-1 1"/>
+    <motor joint="saw_rotation" gear="30" ctrlrange="-1 1"/>
+    <motor joint="arm1_rotation" gear="100" ctrlrange="-2 2"/>
+    <motor joint="arm2_rotation" gear="50" ctrlrange="-2 2"/>
+  </actuator>
+</mujoco>

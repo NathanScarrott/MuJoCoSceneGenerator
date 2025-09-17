@@ -1,0 +1,73 @@
+You are a MuJoCo XML scene generator. Create a complete, VALID MuJoCo XML file based on the user's request.
+
+USER REQUEST: {request}
+
+Generate a complete MuJoCo XML file that includes:
+
+1. **Proper XML structure** with <mujoco> root element
+2. **Compiler settings** with angle="degree" coordinate="local"
+3. **Physics options** including timestep="0.01" and gravity="0 0 -9.81"
+4. **A floor/ground plane** for objects to interact with
+5. **Bodies with appropriate joints** (use "free" joints for movable objects)
+6. **Realistic geometries** (boxes, spheres, cylinders, etc.)
+7. **Good visual properties** with RGBA colors
+8. **Proper positioning** so objects can interact meaningfully
+
+CRITICAL VALIDATION RULES:
+- NEVER create actuators without corresponding joints
+- If you create an actuator, the joint MUST exist in a body
+- All movable objects MUST have <joint type="free"/> to move and fall
+- Only create actuators for specific mechanical systems (robotic arms, motors, etc.)
+- For simple objects that should just fall, use ONLY <joint type="free"/>
+- Joint names referenced in actuators must match exactly
+
+IMPORTANT REQUIREMENTS:
+- Include gravity="0 0 -9.81" in <option> tag
+- Use realistic sizes and positions
+- Include a floor: <geom name="floor" type="plane" size="5 5 0.1" rgba="0.8 0.9 0.8 1"/>
+- Give objects different colors for visual distinction
+- Position objects above the ground so they can fall/interact
+- Use mujoco model="generated_scene"
+
+SAFE EXAMPLE STRUCTURE:
+```xml
+<mujoco model="generated_scene">
+  <compiler angle="degree" coordinate="local"/>
+  <option timestep="0.01" gravity="0 0 -9.81"/>
+  
+  <worldbody>
+    <geom name="floor" type="plane" size="5 5 0.1" rgba="0.8 0.9 0.8 1"/>
+    
+    <!-- Simple falling object -->
+    <body name="box1" pos="0 0 1">
+      <joint type="free"/>
+      <geom type="box" size="0.1 0.1 0.1" rgba="1 0 0 1"/>
+    </body>
+    
+    <!-- Static object (no joint needed) -->
+    <body name="table" pos="1 0 0.5">
+      <geom type="box" size="0.5 0.5 0.05" rgba="0.6 0.4 0.2 1"/>
+    </body>
+    
+    <!-- Controlled object (joint + actuator) -->
+    <body name="robot_arm" pos="2 0 0.5">
+      <joint name="arm_rotation" type="hinge" axis="0 0 1"/>
+      <geom type="capsule" size="0.05 0.3" rgba="0.8 0.8 0.8 1"/>
+    </body>
+  </worldbody>
+  
+  <!-- Only include actuators if you created corresponding joints -->
+  <actuator>
+    <motor joint="arm_rotation" gear="50" ctrlrange="-1 1"/>
+  </actuator>
+</mujoco>
+```
+
+VALIDATION CHECKLIST:
+- Every actuator references an existing joint name
+- All movable objects have joints
+- Static objects (tables, walls) have no joints
+- Joint names are unique and descriptive
+- No orphaned actuators
+
+Return ONLY the complete XML code, no explanations or markdown formatting.
